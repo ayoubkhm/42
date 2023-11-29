@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   @filename.c@                                       :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhamass <akhamass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akhamass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/18 15:06:34 by akhamass          #+#    #+#             */
-/*   Updated: 2023/11/18 15:06:34 by akhamass         ###   ########.fr       */
+/*   Created: 2023/11/18 18:41:42 by akhamass          #+#    #+#             */
+/*   Updated: 2023/11/18 18:41:46 by akhamass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
-void *ft_memcpy(void *dest, const void *src, size_t n)
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
+	unsigned char	*pdest;
+	unsigned char	*psrc;
 
-    unsigned char *pdest;
-    unsigned char *psrc;
-    
-    pdest = (unsigned char *)dest;
-    psrc = (const unsigned char *)src;
-
-    while (n != 0)
-    {
-        *pdest = *psrc;
-        pdest++;
-        psrc++;
-        n--;
-    }
-    return (dest);
+	pdest = (unsigned char *)dest;
+	psrc = (unsigned char *)src;
+	while (n != 0)
+	{
+		*pdest = *psrc;
+		pdest++;
+		psrc++;
+		n--;
+	}
+	return (dest);
 }

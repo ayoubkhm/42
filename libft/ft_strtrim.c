@@ -1,61 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   @filename.c@                                       :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhamass <akhamass@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akhamass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/18 15:08:22 by akhamass          #+#    #+#             */
-/*   Updated: 2023/11/18 15:08:22 by akhamass         ###   ########.fr       */
+/*   Created: 2023/11/18 20:13:40 by akhamass          #+#    #+#             */
+/*   Updated: 2023/11/19 03:39:53 by akhamass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 #include <stdlib.h>
 
-static int is_in_set(char c, const char *set)
+static int	is_set(const char *set, char c)
 {
-    size_t i = 0;
-    while (set[i] != '\0')
-    {
-        if (set[i] == c)
-            return (1);
-        i++;
-    }
-    return (0);
+	if (!set)
+		return (0);
+	while (*set != '\0')
+	{
+		if (*set == c)
+			return (1);
+		set++;
+	}
+	return (0);
 }
 
-char *ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-    size_t start;
-    size_t end;
-    size_t len;
-    char *trimmed_str;
+	size_t	slen;
+	size_t	len;
+	char	*s2;
+	char	*trim;
 
-    if (s1 == NULL || set == NULL)
-        return (NULL);
-
-    start = 0;
-    while (s1[start] != '\0' && is_in_set(s1[start], set) != '\0')
-        start++;
-
-    end = 0;
-    while (s1[end] != '\0')
-        end++;
-    while (end > start && is_in_set(s1[end - 1], set) != '\0')
-        end--;
-
-    len = end - start;
-    trimmed_str = (char *)malloc(sizeof(char) * (len + 1));
-    if (trimmed_str == NULL)
-        return (NULL);
-
-    size_t i = 0;
-    while (i < len)
-    {
-        trimmed_str[i] = s1[start + i];
-        i++;
-    }
-    trimmed_str[len] = '\0';
-
-    return trimmed_str;
+	if (s1 == NULL)
+		return (NULL);
+	slen = ft_strlen(s1);
+	s2 = (char *)s1 + slen - 1;
+	if (s2 == NULL)
+		return (NULL);
+	while (*s1 && is_set(set, *(char *)s1))
+		s1++;
+	while (s2 > s1 && is_set(set, *s2))
+		s2--;
+	if (s2 >= s1)
+		len = s2 - s1 + 1;
+	else
+		len = 0;
+	trim = ft_substr(s1, 0, len);
+	return (trim);
 }
