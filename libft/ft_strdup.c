@@ -12,19 +12,7 @@
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
-
-char	*ft_strcpy(char *dest, const char *src)
+char	*ft_strcpies(char *dest, const char *src)
 {
 	unsigned int	i;
 
@@ -47,6 +35,6 @@ char	*ft_strdup(const char *s)
 	new_str = malloc((length + 1) * sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
-	ft_strcpy(new_str, s);
+	ft_strcpies(new_str, s);
 	return (new_str);
 }

@@ -6,7 +6,7 @@
 /*   By: akhamass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 18:43:14 by akhamass          #+#    #+#             */
-/*   Updated: 2023/11/18 21:52:15 by akhamass         ###   ########.fr       */
+/*   Updated: 2023/11/29 18:19:36 by akhamass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,21 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	unsigned char	*pdest;
 	unsigned char	*psrc;
 
+	if (!dest && !src)
+		return (dest);
 	pdest = (unsigned char *)dest;
 	psrc = (unsigned char *)src;
 	if (psrc < pdest)
 	{
-		psrc = psrc + n;
-		pdest = pdest + n;
-		while (n != 0)
-		{
+		psrc += n;
+		pdest += n;
+		while (n--)
 			*--pdest = *--psrc;
-			n--;
-		}
 	}
 	else
 	{
-		while (n != 0)
-		{
+		while (n--)
 			*pdest++ = *psrc++;
-			n--;
-		}
 	}
 	return (dest);
 }
