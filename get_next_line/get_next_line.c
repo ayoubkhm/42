@@ -1,4 +1,4 @@
-#include <get_next_line.h>
+#include "get_next_line.h"
 
 char    *get_before_newline(const char *s)
 {
@@ -10,7 +10,7 @@ char    *get_before_newline(const char *s)
         i++;
     if (s[i] != '\0' && s[i] == '\n')
         i++;
-    res = ft_malloc_zero(i + 1, sizeof * res);
+    res = ft_calloc_bzero(i + 1, sizeof * res);
     if (!res)
         return (NULL);
     i = 0;
@@ -41,7 +41,7 @@ char    *get_after_newline(const char *s)
         i++;
     if (s[i] != '\0' && s[i] == '\n')
         i++;
-    res = ft_malloc_zero((j - i) + 1, sizeof * res);
+    res = ft_calloc_bzero((j - i) + 1, sizeof * res);
     if (!res)
         return (NULL);
     j = 0;
@@ -73,9 +73,9 @@ void    ft_read_line(int fd, char **keep, char **tmp)
         buf[r] = '\0';
         *tmp = ft_strdup(*keep);
         ft_free_strs(keep, 0, 0);
-        *keep = join_strs(*tmp, buf);
+        *keep = join_str(*tmp, buf);
         ft_free_strs(tmp, 0, 0);
-        if (contains_newline(*keep))
+        if (contains_new_line(*keep))
             break ;
     }
     ft_free_strs(&buf, 0, 0);

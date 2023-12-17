@@ -1,4 +1,4 @@
-#include <get_next_line.h>
+#include "get_next_line.h"
 
 int contains_new_line(const char *s)
 {
@@ -24,7 +24,7 @@ char *ft_strdup(const char *s1)
         return (NULL);
     while (s1[i] != '\0')
         i++;
-    s2 = ft_malloc_zero(i + 1, sizeof *s2);
+    s2 = ft_calloc_bzero(i + 1, sizeof *s2);
     if (s2 == NULL)
         return (NULL);
     i = 0;
@@ -51,7 +51,7 @@ char    *join_str(const char *s1, const char *s2)
     i = 0;
     while (s2 && s2[i])
         i++;
-    s = ft_malloc_zero(len + i + 1, sizeof * s);
+    s = ft_calloc_bzero(len + i + 1, sizeof * s);
     if (!s)
         return (NULL);
     len = -1;
