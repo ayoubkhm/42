@@ -1,50 +1,51 @@
 #include "ft_printf.h"
 
-static int	check_type(const char *input, void *arg)
+static int	exec_conversion(char spec_ltr, va_list args)
 {
-	int	i;
-
-	i = 0;
-	if (*input == 'c')
-		i += print_char((int)arg);
-	else if (*input == 's')
-		i += print_string((char *)arg);
-	else if (*input == 'p')
-		i += print_pointer((unsigned long)arg, 87);
-	else if (*input == 'd')
-		i += print_int((int)arg);
-	else if (*input == 'i')
-		i += print_int((int)arg);
-	else if (*input == 'u')
-		i += print_unsigned((unsigned int)arg);
-	else if (*input == 'x')
-		i += print_hex((unsigned int)arg, 87);
-	else if (*input == 'X')
-		i += print_hex((unsigned int)arg, 55);
-	return (i);
+	if (spec_ltr == '%')
+		return (write(1, "%", 1));
+	else if (spec_ltr == 'c')
+	{
+		ft_putchar_fd(va_arg(args, int), 1);
+		return (1);
+	}
+	else if (spec_ltr == 's')
+		return (prt_str(va_arg(args, char *)));
+	else if (spec_ltr == 'p')
+		return (prt_ptr(va_arg(args, void *)));
+	else if (spec_ltr == 'd' || spec_ltr == 'i')
+		return (prt_int(va_arg(args, int)));
+	else if (spec_ltr == 'u')
+		return (prt_unsigned(va_arg(args, unsigned int)));
+	else if (spec_ltr == 'x')
+		return (prt_hexa(va_arg(args, ssize_t), false));
+	else if (spec_ltr == 'X')
+		return (prt_hexa(va_arg(args, ssize_t), true));
+	return (0);
 }
 
-int	ft_printf(const char *input, ...)
+int	ft_printf(const char *__format, ...)
 {
-	va_list			args;
-	unsigned int	i;
+	int		i;
+	int		len;
+	va_list	args;
 
+	if (!__format)
+		return (0);
 	i = 0;
-	va_start(args, input);
-	while (*input != '\0')
+	len = 0;
+	va_start(args, __format);
+	while (__format[i])
 	{
-		if (*input == '%')
+		if (__format[i] == '%')
 		{
-			input++;
-			if (ft_strchr("cspdiuxX", *input))
-				i += check_type(input, va_arg(args, void *));
-			else if (*input == '%')
-				i += print_char('%');
+			i++;
+			len += exec_conversion(__format[i], args);
 		}
 		else
-			i = i + print_char(*input);
-		input++;
+			len += write(1, &__format[i], 1);
+		i++;
 	}
 	va_end(args);
-	return (i);
+	return (len);
 }

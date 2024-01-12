@@ -1,15 +1,16 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
+# include "libft.h"
 # include <stdarg.h>
-# include "./libft/libft.h"
+# include <limits.h>
+# include <stdio.h>
 
-int		ft_printf(const char *input, ...);
-int     print_pointer(unsigned long long ptr);
-int		print_unsigned(unsigned int nb);
-int		print_string(char *s);
-int		print_int(int n);
-int		print_char(char c);
-int		print_hex(unsigned int value, int asc);
+int		ft_printf(const char *__format, ...);
+int		prt_str(char const *str);
+int		prt_ptr(void *ptr_addr);
+int		prt_int(int n);
+int		prt_unsigned(unsigned int nbr);
+int		prt_hexa(unsigned int nbr, bool upper_case);
 
 #endif
