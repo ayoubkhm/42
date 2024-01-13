@@ -21,7 +21,7 @@ static void	put_int(int n)
 
 	if (n > 9)
 		put_int(n / 10);
-	write(STDOUT_FILENO, &digits[n % 10], 1);
+	write(1, &digits[n % 10], 1);
 }
 
 int	prt_int(int n)
@@ -29,11 +29,11 @@ int	prt_int(int n)
 	int	len;
 
 	if (n == INT_MIN)
-		return ((write(STDOUT_FILENO, "-2147483648", 11)));
+		return ((write(1, "-2147483648", 11)));
 	len = i_digits(n);
 	if (n < 0)
 	{
-		write(STDOUT_FILENO, "-", 1);
+		write(1, "-", 1);
 		n *= -1;
 	}
 	put_int(n);

@@ -21,14 +21,14 @@ static void	put_ptr(unsigned long long addr)
 
 	if (addr >= 16)
 		put_ptr(addr / 16);
-	write(STDOUT_FILENO, &digits[addr % 16], 1);
+	write(1, &digits[addr % 16], 1);
 }
 
 int	prt_ptr(void *addr)
 {
 	if (addr == NULL)
-		return (write(STDOUT_FILENO, "(nil)", 5));
-	write(STDOUT_FILENO, "0x", 2);
+		return (write(1, "(nil)", 5));
+	write(1, "0x", 2);
 	put_ptr((unsigned long long)addr);
 	return (p_digits((unsigned long long)addr) + 2);
 }

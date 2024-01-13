@@ -21,7 +21,7 @@ void	put_unsigned(unsigned int nbr)
 
 	if (nbr > 9)
 		put_unsigned(nbr / 10);
-	write(STDOUT_FILENO, &digits[nbr % 10], 1);
+	write(1, &digits[nbr % 10], 1);
 }
 
 int	prt_unsigned(unsigned int nbr)

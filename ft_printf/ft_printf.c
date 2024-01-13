@@ -1,26 +1,25 @@
 #include "ft_printf.h"
 
-static int	exec_conversion(char spec_ltr, va_list args)
+static int	check_type(char pourcent_type, va_list args)
 {
-	if (spec_ltr == '%')
+	if (pourcent_type == '%')
 		return (write(1, "%", 1));
-	else if (spec_ltr == 'c')
+	else if (pourcent_type == 'c')
 	{
 		ft_putchar_fd(va_arg(args, int), 1);
 		return (1);
 	}
-	else if (spec_ltr == 's')
+	else if (pourcent_type == 's')
 		return (prt_str(va_arg(args, char *)));
-	else if (spec_ltr == 'p')
+	else if (pourcent_type == 'p')
 		return (prt_ptr(va_arg(args, void *)));
-	else if (spec_ltr == 'd' || spec_ltr == 'i')
+	else if (pourcent_type == 'd' || pourcent_type == 'i')
 		return (prt_int(va_arg(args, int)));
-	else if (spec_ltr == 'u')
+	else if (pourcent_type == 'u')
 		return (prt_unsigned(va_arg(args, unsigned int)));
-	else if (spec_ltr == 'x')
-		return (prt_hexa(va_arg(args, ssize_t), false));
-	else if (spec_ltr == 'X')
-		return (prt_hexa(va_arg(args, ssize_t), true));
+	else if (pourcent_type == 'x' || pourcent_type == 'X')
+    return (prt_hexa(va_arg(args, ssize_t), (pourcent_type == 'X')));
+
 	return (0);
 }
 
@@ -40,7 +39,7 @@ int	ft_printf(const char *__format, ...)
 		if (__format[i] == '%')
 		{
 			i++;
-			len += exec_conversion(__format[i], args);
+			len += check_type(__format[i], args);
 		}
 		else
 			len += write(1, &__format[i], 1);

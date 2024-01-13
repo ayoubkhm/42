@@ -23,9 +23,9 @@ static void	put_hexa(unsigned int nbr, bool upper_case)
 	if (nbr >= 16)
 		put_hexa((nbr / 16), upper_case);
 	if (upper_case == true)
-		write(STDOUT_FILENO, &upper_digits[nbr % 16], 1);
+		write(1, &upper_digits[nbr % 16], 1);
 	else
-		write(STDOUT_FILENO, &lower_digits[nbr % 16], 1);
+		write(1, &lower_digits[nbr % 16], 1);
 }
 
 int	prt_hexa(unsigned int nbr, bool upper_case)
