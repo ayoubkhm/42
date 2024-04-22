@@ -86,7 +86,7 @@ char	*ft_parse_line(char **keep, char **tmp)
 	char	*line;
 
 	*tmp = ft_strdup(*keep);
-	ft_free_strs(keep, 0, 0);
+	ft_free_strs(keep, 0, 0)
 	*keep = get_after_newline(*tmp);
 	line = get_before_newline(*tmp);
 	ft_free_strs(tmp, 0, 0);
