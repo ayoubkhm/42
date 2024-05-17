@@ -11,79 +11,103 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-static size_t	count_words(const char *s, char c)
+int	ft_count_str(char *str, char c)
 {
-	size_t	count;
+	int		i;
+	int		count;
+	int		new_word;
 
+	i = 0;
 	count = 0;
-	while (*s != '\0')
+	while (str[i] != '\0')
 	{
-		while (*s == c)
-			s++;
-		if (*s)
+		new_word = 0;
+		while (str[i] == c && str[i] != '\0')
+			i++;
+		while (str[i] != c && str[i] != '\0')
+		{
+			new_word = 1;
+			i++;
+		}
+		if (new_word == 1)
 			count++;
-		while (*s != '\0' && *s != c)
-			s++;
 	}
 	return (count);
 }
 
-static char	*get_next_word(const char **s, char c)
+static int	ft_allocate_memory(char **strs, char *str, char c)
 {
-	const char	*word_start;
-	char		*word;
-	size_t		len;
-	size_t		i;
+	int		i;
+	int		nb_letter;
+	int		count_word;
 
-	len = 0;
-	while (**s == c)
-		(*s)++;
-	word_start = *s;
-	while (**s != '\0' && **s != c)
-	{
-		len++;
-		(*s)++;
-	}
-	word = (char *)malloc(sizeof(char) * (len + 1));
-	if (word == NULL)
-		return (NULL);
 	i = 0;
-	while (i < len)
+	count_word = 0;
+	while (str[i] != '\0')
 	{
-		word[i] = word_start[i];
-		i++;
+		nb_letter = 0;
+		while (str[i] == c && str[i] != '\0')
+			i++;
+		while (str[i] != c && str[i] != '\0')
+		{
+			nb_letter++;
+			i++;
+		}
+		if (nb_letter > 0)
+		{
+			strs[count_word] = malloc(sizeof(char) * (nb_letter + 1));
+			if (str == NULL)
+				return (0);
+			count_word++;
+		}
 	}
-	word[len] = '\0';
-	return (word);
+	return (1);
+}
+
+static void	ft_fill_strs(char **strs, char *str, char c)
+{
+	int		i;
+	int		nb_letter;
+	int		count_word;
+
+	i = 0;
+	count_word = 0;
+	while (str[i] != '\0')
+	{
+		nb_letter = 0;
+		while (str[i] == c && str[i] != '\0')
+			i++;
+		while (str[i] != c && str[i] != '\0')
+		{
+			strs[count_word][nb_letter] = str[i];
+			nb_letter++;
+			i++;
+		}
+		if (nb_letter > 0)
+		{
+			strs[count_word][nb_letter] = '\0';
+			count_word++;
+		}
+	}
 }
 
 char	**ft_split(char const *s, char c)
 {
-	size_t	words;
-	size_t	i;
-	char	**array;
+	char	**strs;
+	char	*str;
+	int		nbr_word;
 
-	if (s == NULL)
+	if (!s)
 		return (NULL);
-	words = count_words(s, c);
-	array = (char **)malloc(sizeof(char *) * (words + 1));
-	if (array == NULL)
-		return (NULL);
-	i = 0;
-	while (i < words)
-	{
-		array[i] = get_next_word(&s, c);
-		if (array[i] == NULL)
-		{
-			while (i > 0)
-				free(array[--i]);
-			free(array);
-			return (NULL);
-		}
-		i++;
-	}
-	array[words] = NULL;
-	return (array);
+	str = (char *)s;
+	nbr_word = ft_count_str(str, c);
+	strs = malloc(sizeof(char **) * (nbr_word + 1));
+	if (strs == NULL)
+		return (0);
+	strs[nbr_word] = NULL;
+	if (!ft_allocate_memory(strs, str, c))
+		return (0);
+	ft_fill_strs(strs, str, c);
+	return (strs);
 }
